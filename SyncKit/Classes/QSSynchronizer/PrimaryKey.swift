@@ -29,5 +29,5 @@ import CoreData
 @objc public protocol MultiParentKey: class {
     
     static func parentKeys() -> [String]
-    static func parentKey(entity: NSManagedObjectModel) -> String
+    static func parentKey(entity: NSManagedObject) -> String
 }
