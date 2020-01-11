@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CoreData
 
 /**
  *   The name of the property that acts as primary key for objects of this class. Primary key values are expected to remain the same
@@ -23,4 +24,10 @@ import Foundation
 @objc public protocol ParentKey: class {
     
     static func parentKey() -> String
+}
+
+@objc public protocol MultiParentKey: class {
+    
+    static func parentKeys() -> [String]
+    static func parentKey(entity: NSManagedObjectModel) -> String
 }

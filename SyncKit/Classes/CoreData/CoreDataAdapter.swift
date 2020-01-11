@@ -153,8 +153,16 @@ extension CoreDataAdapter {
             guard let entities = self.targetContext.persistentStoreCoordinator?.managedObjectModel.entities else { return }
             for entityDescription in entities {
                 let entityClass: AnyClass? = NSClassFromString(entityDescription.managedObjectClassName)
+                
+                var parentKeys = [String]()
                 if let parentKeyClass = entityClass as? ParentKey.Type {
-                    let parentKey = parentKeyClass.parentKey()
+                    parentKeys = [parentKeyClass.parentKey()]
+                }
+                else if let parentKeyClass = entityClass as? MultiParentKey.Type {
+                    parentKeys = parentKeyClass.parentKeys()
+                }
+                
+                for parentKey in parentKeys {
                     guard let relationshipDescription = entityDescription.relationshipsByName[parentKey],
                     let parentEntity = relationshipDescription.destinationEntity,
                     let parentName = parentEntity.name,

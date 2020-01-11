@@ -314,6 +314,9 @@ extension CoreDataAdapter {
         if let parentKeyClass = entityClass as? ParentKey.Type {
             parentKey = parentKeyClass.parentKey()
         }
+        else if let parentKeyClass = entityClass as? MultiParentKey.Type, let entity = originalObject {
+            parentKey = parentKeyClass.parentKey(entity: entity)
+        }
         
         let referencedEntities = referencedSyncedEntitiesByReferenceName(for: originalObject, context: context)
         referencedEntities.forEach { (relationshipName, entity) in
